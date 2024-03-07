@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yu.mapper.ChallengesMapper">
+    <select id="pageQuery" resultType="com.yu.vo.ChallengePKPageQueryVO">
+        select u1.username as initiator,u2.username as acceptor,c.challenge_content,c.completion_status,c.tag
+        from challenge_pk c
+        join user u1 on c.initiator_id = u1.user_id
+        join user u2 on c.acceptor_id = u2.user_id
+    </select>
+
+    <select id="getInfoById" resultType="com.yu.vo.ChallengeInfoVO">
+        select u1.username as initiator,u2.username as acceptor,
+               c.challenge_content,c.tag,c.src from challenge_pk c
+        join user u1 on u1.user_id = c.initiator_id
+        left join user u2 on u2.user_id = c.acceptor_id
+        <where>
+            c.challenge_id = #{id}
+        </where>
+    </select>
+
+    <update id="updateChallenge" parameterType="employee">
+        update challenge_pk
+        <set>
+            <if test="initiatorId != null">initiator_id = #{initiatorId},</if>
+            <if test="acceptorId != null">acceptor_id = #{acceptorId},</if>
+            <if test="src != null">src = #{src},</if>
+            <if test="challengeContent != null">challenge_content = #{challengeContent},</if>
+            <if test="completionStatus != null">completion_status = #{completionStatus},</if>
+            <if test="tag != null">tag = #{tag},</if>
+        </set>
+        <where>
+            challenge_id = #{challengeId}
+        </where>
+    </update>
+</mapper>

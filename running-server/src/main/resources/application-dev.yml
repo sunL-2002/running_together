@@ -1,0 +1,28 @@
+sky:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: localhost
+    port: 3306
+    database: funrunning_yu
+    username: root
+    password: 123
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAIStPeFLzsPPT8gG3LPW64
+    access-key-secret: U6k1brOZ8gaOIXv3nXbu1GTUzy6Pd7
+    bucket-name: sky-itcast
+  redis:
+    host: localhost
+    port: 6379
+    password: root
+    database: 9
+  wechat:
+    appid: wxf58352b3fe5e386c
+    secret: 0fb8f17e4f773930804677f57687964b
+    mchid:     #//商户号
+    mchSerialNo:         #//证书的序列号
+    privateKeyFilePath:    #//私钥文件
+    apiV3Key:                #//解密的一个秘钥
+    weChatPayCertFilePath:   #//平台证书文件
+    notifyUrl: https://22ee48af.r15.cpolar.top/notify/paySuccess          #//回调地址 支付成功之后
+    refundNotifyUrl: https://22ee48af.r15.cpolar.top/notify/refundSuccess     #//回调地址 退款成功之后

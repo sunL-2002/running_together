@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yu.mapper.OrganizationMapper">
+
+    <select id="getMemberByGroupId" resultType="com.yu.entity.User">
+        select u1.user_id,u1.username, u1.avatar,u1.phone_number,u1.openid
+        from group_member g1
+        join running_group r1 on g1.group_id = r1.group_id
+        join user u1 on g1.user_openid = u1.openid
+        where g1.group_id = #{id}
+    </select>
+
+    <select id="getOrganizationInfo" resultType="com.yu.vo.OrganizationInfoVO">
+        select c.group_id,c.group_name,c.src,c.group_description,u1.username as initiator
+        from running_group c
+        left join user u1 on c.initiator_id = u1.user_id
+        where c.group_id = #{id}
+    </select>
+
+    <insert id="insert">
+        insert into running_group(group_name, src, group_description, initiator_id)
+        values (#{groupName},#{src},#{groupDescription},#{initiatorId})
+    </insert>
+
+    <!-- 跑团分页查询 -->
+    <select id="pageQuery" resultType="com.yu.entity.RunningGroup">
+        select * from running_group
+        <where>
+            <if test="groupName != null and groupName !=''">
+                group_name like concat('%',#{groupName},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="pageMember" resultType="com.yu.vo.PageMemberVO">
+        select u1.username as name, u1.phone_number as phone
+        from group_member c
+        join user u1 on c.user_openid = u1.openid
+        <where>
+            c.group_id = #{id}
+        </where>
+    </select>
+</mapper>

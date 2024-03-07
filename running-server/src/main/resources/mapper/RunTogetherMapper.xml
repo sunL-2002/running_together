@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yu.mapper.RunTogetherMapper">
+
+    <select id="pageQuery" resultType="com.yu.vo.RunTogetherPageQueryVO">
+        select u1.username as initiator,u2.username as acceptor ,c.run_datetime,c.run_location
+        from nearby_running c
+        join user u1 on u1.user_id = c.initiator_id
+        join user u2 on u2.user_id = c.acceptor_id
+    </select>
+
+    <select id="getRunTogetherInfo" resultType="com.yu.vo.RunTogetherInfoVO">
+        select u1.username as initiator,
+        IF(c.acceptor_id IS NOT NULL, u2.username, null) AS acceptor,
+               c.run_datetime,c.run_location
+        from nearby_running c
+        join user u1 on c.initiator_id = u1.user_id
+        left join user u2 on c.acceptor_id = u2.user_id
+        <where>
+            c.run_id = #{id}
+        </where>
+    </select>
+
+    <select id="getIdByName" resultType="integer">
+        select user_id
+        from user
+        where username = #{name}
+    </select>
+
+
+
+    <update id="updateRunTogether" parameterType="employee">
+        update nearby_running
+        <set>
+            <if test="initiatorId != null">initiator_id = #{initiatorId},</if>
+            <if test="acceptorId != null">acceptor_id = #{acceptorId},</if>
+            <if test="runDatetime != null">run_datetime = #{runDatetime},</if>
+            <if test="runLocation != null">run_location = #{runLocation},</if>
+        </set>
+        <where>
+            run_id = #{runId}
+        </where>
+    </update>
+</mapper>
