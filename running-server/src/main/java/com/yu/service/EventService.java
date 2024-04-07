@@ -37,7 +37,7 @@ public interface EventService {
     PageResult pageQuery(EventPageQueryDTO eventPageQueryDTO);
 
     /**
-     * 跑团批量删除
+     * 活动批量删除
      * @param ids
      */
     void deleteBach(List<Integer> ids);

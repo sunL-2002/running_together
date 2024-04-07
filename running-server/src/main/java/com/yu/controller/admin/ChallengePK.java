@@ -22,7 +22,7 @@ public class ChallengePK {
     private ChallengesService challengesService;
 
     @GetMapping("/page")
-    @ApiOperation("活动分页查询")
+    @ApiOperation("挑战分页查询")
     public Result<PageResult> page(ChallengePageQueryDTO challengePageQueryDTO){
         System.out.println("收到一条PK请求");
         PageResult pageResult = challengesService.pageQuery(challengePageQueryDTO);
