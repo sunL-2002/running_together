@@ -58,7 +58,8 @@ public interface RunTogetherMapper {
     int getIdByName(String name);
 
     @Select("select user_id from user where openid = #{openid}")
-    int getIdByOpenid(String openid);
+    Integer getIdByOpenid(String openid);
 
+    void insertRunTogether(NearbyRunning nearbyRunning);
 
 }

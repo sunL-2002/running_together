@@ -1,6 +1,7 @@
 package com.yu.controller.user;
 
 import com.yu.dto.GetInfoByTagDTO;
+import com.yu.dto.InsertRunTogetherDTO;
 import com.yu.dto.UpdateRunTogetherDTO;
 import com.yu.result.Result;
 import com.yu.service.RunTogetherService;
@@ -28,6 +29,20 @@ public class RunTogetherController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+
+    /**
+     * 发起约跑
+     * @return
+     */
+    @PostMapping("/insert")
+    public Result insertRunTogether(@RequestBody InsertRunTogetherDTO insertRunTogetherDTO){
+        String openid = insertRunTogetherDTO.getOpenid();
+        String local = insertRunTogetherDTO.getLocal();
+        String date = insertRunTogetherDTO.getDate();
+        String time = insertRunTogetherDTO.getTime();
+        runTogetherService.insertRunTogether(openid,local,date,time);
+        return Result.success();
+    }
 
     @PostMapping("/update")
     @ApiOperation("接受邀请")

@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface RunTogetherService {
 
+    void insertRunTogether(String openid,String local,String date,String time);
+
     /**
      * 查询根据信息
      * @param getInfoByTagDTO

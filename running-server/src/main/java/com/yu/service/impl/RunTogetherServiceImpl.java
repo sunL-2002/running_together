@@ -20,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -70,6 +71,22 @@ public class RunTogetherServiceImpl implements RunTogetherService{
         long total = runTogetherPageQuery.getTotal();
         List<RunTogetherPageQueryVO> result = runTogetherPageQuery.getResult();
         return new PageResult(total,result);
+    }
+
+    @Override
+    public void insertRunTogether(String openid,String local, String date, String time) {
+        Integer id = runTogetherMapper.getIdByOpenid(openid);
+        if(id == null && id == -1){
+            throw new NullPointerException("异常");
+        }
+        String dateTime = date + "T" + time;
+        LocalDateTime localDatetime = toLocalDatetime(dateTime);
+        NearbyRunning nearbyRunning = NearbyRunning.builder()
+                .initiatorId(id)
+                .runLocation(local)
+                .runDatetime(localDatetime)
+                .build();
+        runTogetherMapper.insertRunTogether(nearbyRunning);
     }
 
     /**

@@ -42,4 +42,9 @@
             run_id = #{runId}
         </where>
     </update>
+
+    <insert id="insertRunTogether" parameterType="employee">
+        insert into nearby_running(initiator_id,run_datetime,run_location)
+        values (#{initiatorId},#{runDatetime},#{runLocation})
+    </insert>
 </mapper>
