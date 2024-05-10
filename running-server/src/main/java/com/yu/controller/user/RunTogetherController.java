@@ -41,6 +41,7 @@ public class RunTogetherController {
         String date = insertRunTogetherDTO.getDate();
         String time = insertRunTogetherDTO.getTime();
         runTogetherService.insertRunTogether(openid,local,date,time);
+        clearCache("runTogether*");
         return Result.success();
     }
 
@@ -61,7 +62,6 @@ public class RunTogetherController {
         System.out.println(info);
         return Result.success(info);
     }
-
 
     /**
      * 根据提供信息返回约跑信息
